@@ -29,7 +29,11 @@ public class Usuario extends Personal {
     }
 
 
-    public void devolverLibro(){
+    public void devolverLibro(Libro libro){
+
+       
+
+        
         
     }
    

@@ -8,11 +8,14 @@ public class Libro implements MaterialBiblio{
     private Date FechaPub;
     private String id;
 
+   
+
     public Libro(String titulo, String autor, Date fechaPub, String id) {
         this.titulo = titulo;
         this.autor = autor;
         FechaPub = fechaPub;
         this.id = id;
+        
     }
 
     public String getTitulo() {
@@ -46,6 +49,8 @@ public class Libro implements MaterialBiblio{
     public void setId(String id) {
         this.id = id;
     }
+
+   
 
     @Override
     public void verSinopsis() {
