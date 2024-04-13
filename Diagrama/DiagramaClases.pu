@@ -1,0 +1,61 @@
+@startuml actor
+
+interface MaterialDeBiblioteca {
+    +verSinopsis(): void
+    +prestar(): void
+}
+
+class Libro {
+    - titulo: String
+    - autor: String
+    - fechaPublicacion: String
+    - identificador: String
+    +verSinopsis(): void
+    +prestar(): void
+}
+
+class Revista {
+    - titulo: String
+    - editor: String
+    - numeroEdicion: int
+    +verSinopsis(): void
+    +prestar(): void
+}
+
+class Persona {
+    - nombre: String
+    - fechaNacimiento: String
+    +presentacion(): void
+}
+
+class Autor {
+    - nombre: String
+    - librosEscritos: List<Libro>
+    +mostrarLibrosPorFecha(): void
+}
+
+class Usuario {
+    - nombre: String
+    - ID: String
+    - librosPrestados: List<MaterialDeBiblioteca>
+}
+
+class Bibliotecario {
+    +añadirLibro(libro: Libro): void
+    +eliminarLibro(libro: Libro): void
+}
+
+class Biblioteca {
+    - listaDeMateriales: List<MaterialDeBiblioteca>
+    - listaDeUsuarios: List<Usuario>
+}
+
+MaterialDeBiblioteca <|-- Libro
+MaterialDeBiblioteca <|-- Revista
+Persona <|-- Usuario
+Persona <|-- Autor
+
+Biblioteca *-- "1..*" MaterialDeBiblioteca
+Biblioteca *-- "0..*" Usuario
+
+@enduml
