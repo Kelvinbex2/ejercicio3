@@ -1,8 +1,7 @@
 package Modelo;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import Entradas.Entrada;
 
 public class Revista implements MaterialBiblio {
     private String titulo;
@@ -11,21 +10,14 @@ public class Revista implements MaterialBiblio {
     private int contardorRev;
     private List<String> revPrestados;
 
-    
-
-
-   
-
-
     public Revista(String titulo, String editor, int numeroEdicion) {
         this.titulo = titulo;
         this.editor = editor;
         this.numeroEdicion = numeroEdicion;
         contardorRev++;
-        revPrestados=new ArrayList<>();
+        revPrestados = new ArrayList<>();
     }
 
-   
     public String getTitulo() {
         return titulo;
     }
@@ -54,25 +46,22 @@ public class Revista implements MaterialBiblio {
         return contardorRev;
     }
 
-
     public void setContardorRev(int contardorRev) {
         this.contardorRev = contardorRev;
     }
+
     public List<String> getRevPrestados() {
         return revPrestados;
     }
-
 
     public void setRevPrestados(List<String> revPrestados) {
         this.revPrestados = revPrestados;
     }
 
-
-
     @Override
     public void verSinopsis() {
         String msg = Entrada.leerString();
-        if (msg.startsWith("Habla") && msg.length()==20) {
+        if (msg.startsWith("Habla") && msg.length() == 20) {
             StringBuilder sb = new StringBuilder();
             sb.append("El autor " + getEditor()).append(" " + msg);
             System.out.println(sb);
@@ -82,28 +71,24 @@ public class Revista implements MaterialBiblio {
 
     @Override
     public void prestar() {
-        if (contardorRev!=0) {
-            System.out.println("Hay " + contardorRev +  "Revistas");
+        if (contardorRev != 0) {
+            System.out.println("Hay " + contardorRev + "Revistas");
 
             System.out.println("El titulo de revista al prestar");
             String titulos = Entrada.leerString();
-           
 
             if (titulo.equals(titulos)) {
                 contardorRev--;
                 revPrestados.add(titulos);
                 System.out.println("Revista prestado");
-            }else{
+            } else {
                 System.out.println("El titulo no coincide");
             }
 
-        }else{
+        } else {
             System.out.println("No hay Revista disponibles");
         }
 
-        
-        
     }
-
 
 }

@@ -2,7 +2,8 @@ package Modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import Entradas.Entrada;
+
+
 
 public class Biblioteca {
     private String nombre;
@@ -89,5 +90,13 @@ public class Biblioteca {
             System.out.println("Error");
         }
 
+    }
+
+    
+    public void detalle() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nombre: ").append(nombre).append("\n").append("Calle: ").append(calle);
+        System.out.println(sb.toString());
+        
     }
 }

@@ -14,5 +14,15 @@ public class Bibliotecario {
         libros.remove(libro);
     }
 
+
+    public void mostrarLibros(){
+        for (Libro libro : libros) {
+            
+            libro.detalle();
+        }
+    }
+    
+
+    
     
 }
