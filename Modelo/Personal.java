@@ -1,9 +1,12 @@
 package Modelo;
 
-public class Personal {
-    private String nombre;
-    private String fechNac;
-    private String tipo;
+public abstract class Personal {
+
+    
+
+    protected  String nombre;
+    protected String fechNac;
+    protected String  tipo;
 
    
 
