@@ -8,9 +8,11 @@ public class Bibliotecario {
 
     public void aniadirLibro(Libro libro){
         libros.add(libro);
+        
     }
 
-    public void eliminar(Libro libro){
+    public void eliminar(){
+        Libro libro = new Libro();
         libros.remove(libro);
     }
 

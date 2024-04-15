@@ -1,8 +1,7 @@
 package Modelo;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,24 +10,20 @@ public class Libro implements MaterialBiblio {
     private String autor;
     private LocalDate fechaPub;
     private String id;
-    private int contardor;
+    private int contador;
     private List<String> librosPrestados;
+
+    public Libro() {
+        this.librosPrestados = new ArrayList<>();
+    }
 
     public Libro(String titulo, String autor, LocalDate fechaPub) {
         this.titulo = titulo;
         this.autor = autor;
         this.fechaPub = fechaPub;
         this.id = generarIdentificador();
-        contardor++;
+        this.contador = 0; // Inicializar el contador en 1 al crear un nuevo libro
         this.librosPrestados = new ArrayList<>();
-    }
-
-    public LocalDate getFechaPub() {
-        return fechaPub;
-    }
-
-    public void setFechaPub(LocalDate fechaPub) {
-        this.fechaPub = fechaPub;
     }
 
     public String getTitulo() {
@@ -47,88 +42,83 @@ public class Libro implements MaterialBiblio {
         this.autor = autor;
     }
 
+    public LocalDate getFechaPub() {
+        return fechaPub;
+    }
+
+    public void setFechaPub(LocalDate fechaPub) {
+        this.fechaPub = fechaPub;
+    }
+
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public int getContador() {
+        return contador;
     }
 
-    public int getContardor() {
-        return contardor;
-    }
-
-    public void setContardor(int contardor) {
-        this.contardor = contardor;
+    public void setContador(int contador) {
+        this.contador = contador;
     }
 
     @Override
     public void verSinopsis() {
-        String msg = Entrada.leerString();
-        if (msg.startsWith("Habla") && msg.length() == 20) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("El autor " + getAutor()).append(" con id" + getId()).append(" " + msg);
-            System.out.println(sb);
+        System.out.println("Ingrese una sinopsis:");
+        String sinopsis = Entrada.leerString();
+        if (sinopsis.startsWith("Habla") && sinopsis.length() == 20) {
+            System.out.println("El autor " + getAutor() + " con id " + getId() + " " + sinopsis);
         }
-
     }
 
     @Override
     public void prestar() {
-        if (contardor != 0) {
-            System.out.println("Hay " + contardor + "libros");
-
-            System.out.println("El id de libro al prestar");
+        if (contador > 0) {
+            System.out.println("El libro está disponible para prestar.");
+            System.out.println("Ingrese el ID del libro:");
             String idLibro = Entrada.leerString();
-
             if (this.id.equals(idLibro)) {
-                contardor--;
+                contador--;
                 librosPrestados.add(idLibro);
-                System.out.println("Libro prestado");
+                System.out.println("Libro prestado correctamente.");
             } else {
-                System.out.println("El id no coincide");
+                System.out.println("El ID ingresado no coincide con el del libro.");
             }
-
         } else {
-            System.out.println("No hay libros disponibles");
+            System.out.println("El libro no está disponible para prestar.");
         }
-
     }
 
     private String generarIdentificador() {
-        // Obtener las 3 primeras letras del apellido del autor
-        String[] partesNombre = autor.split(" ");
-        String apellido = partesNombre[partesNombre.length - 1];
+        String apellido = autor.substring(autor.lastIndexOf(' ') + 1);
         String tresPrimerasLetras = apellido.substring(0, Math.min(apellido.length(), 3)).toUpperCase();
-
-        // Formatear la fecha de publicación en formato yy-MM-dd
-        SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
-        String fechaFormateada = formatter.format(fechaPub);
-
-        // Combinar las partes para formar el identificador
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        String fechaFormateada = fechaPub.format(formatter);
         return tresPrimerasLetras + "-" + fechaFormateada;
     }
 
     public void detalle() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Título: ").append(titulo).append("\n");
-        sb.append("Autor: ").append(autor).append("\n");
-        sb.append("Fecha de Publicación: ").append(fechaPub).append("\n");
-        sb.append("ID: ").append(id).append("\n");
-        sb.append("Cantidad Disponible: ").append(contardor).append("\n");
-
-        // Agregar información sobre los libros prestados, si los hay
+        System.out.println("Detalles del Libro:");
+        System.out.println("Título: " + titulo);
+        System.out.println("Autor: " + autor);
+        System.out.println("Fecha de Publicación: " + fechaPub);
+        System.out.println("ID: " + id);
+        System.out.println("Cantidad Disponible: " + contador);
         if (!librosPrestados.isEmpty()) {
-            sb.append("Libros Prestados: ").append("\n");
+            System.out.println("Libros Prestados:");
             for (String libroPrestado : librosPrestados) {
-                sb.append("- ").append(libroPrestado).append("\n");
+                System.out.println("- " + libroPrestado);
             }
         } else {
-            sb.append("Libros Prestados: Ninguno\n");
+            System.out.println("Libros Prestados: Ninguno");
         }
-
-        System.out.println(sb.toString());
     }
 
+    public void comprobarTitulo(String titulo) {
+        if (this.titulo.equalsIgnoreCase(titulo)) {
+            System.out.println("El título coincide.");
+        } else {
+            System.out.println("El título no coincide.");
+        }
+    }
 }

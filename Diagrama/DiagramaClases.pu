@@ -5,7 +5,7 @@ interface MaterialDeBiblioteca {
     +prestar(): void
 }
 
-class Libro {
+class Libro implements MaterialDeBiblioteca {
     - titulo: String
     - autor: String
     - fechaPublicacion: String
@@ -14,7 +14,7 @@ class Libro {
     +prestar(): void
 }
 
-class Revista {
+class Revista implements MaterialDeBiblioteca{
     - titulo: String
     - editor: String
     - numeroEdicion: int
@@ -50,12 +50,11 @@ class Biblioteca {
     - listaDeUsuarios: List<Usuario>
 }
 
-MaterialDeBiblioteca <|-- Libro
-MaterialDeBiblioteca <|-- Revista
+
 Persona <|-- Usuario
 Persona <|-- Autor
 
-Biblioteca *-- "1..*" MaterialDeBiblioteca
-Biblioteca *-- "0..*" Usuario
+Biblioteca *--  MaterialDeBiblioteca
+Biblioteca *--  Persona
 
 @enduml

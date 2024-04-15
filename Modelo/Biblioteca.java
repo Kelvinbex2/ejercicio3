@@ -8,7 +8,6 @@ import java.util.List;
 public class Biblioteca {
     private String nombre;
     private String calle;
-
     private List<MaterialBiblio> listaMaterialBiblios;
     private List<Usuario> lUsuarios;
     private List<Personal> personals;
@@ -17,6 +16,8 @@ public class Biblioteca {
         this.listaMaterialBiblios = new ArrayList<>();
         this.lUsuarios = new ArrayList<>();
         this.personals = new ArrayList<>();
+        this.nombre = nombre;
+        this.calle = calle;
     }
 
     public String getNombre() {
@@ -94,8 +95,9 @@ public class Biblioteca {
 
     
     public void detalle() {
+        System.out.println("uuuuuuu");
         StringBuilder sb = new StringBuilder();
-        sb.append("Nombre: ").append(nombre).append("\n").append("Calle: ").append(calle);
+        sb.append("Nombre: ").append(getNombre()).append("\n").append("Calle: ").append(getCalle());
         System.out.println(sb.toString());
         
     }
