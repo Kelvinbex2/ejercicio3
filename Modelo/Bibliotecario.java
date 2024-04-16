@@ -2,8 +2,27 @@ package Modelo;
 
 import java.util.ArrayList;
 
-public class Bibliotecario {
-    private ArrayList<Libro> libros = new ArrayList<>();
+public class Bibliotecario extends Personal {
+    private ArrayList<Libro> libros;
+    
+
+    public Bibliotecario(String nombre, String fechNac, String tipo) {
+        super(nombre, fechNac, tipo);
+        this.libros = new ArrayList<>();
+    }
+
+    public Bibliotecario() {
+        super("", "", "");
+        this.libros = new ArrayList<>();
+    }
+
+    public ArrayList<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(ArrayList<Libro> libros) {
+        this.libros = libros;
+    }
 
     public void aniadirLibro(Libro libro) {
         libros.add(libro);

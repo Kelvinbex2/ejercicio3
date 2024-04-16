@@ -12,8 +12,12 @@ public class Libro implements MaterialBiblio {
     private String id;
     private int contador;
     private List<String> librosPrestados;
+    private List<String> libros= new ArrayList<>();
+    private boolean libroPrestado;
 
     
+
+   
 
     public Libro() {
         this.librosPrestados = new ArrayList<>();
@@ -26,6 +30,7 @@ public class Libro implements MaterialBiblio {
         this.id = generarIdentificador();
         this.contador++;
         this.librosPrestados = new ArrayList<>();
+        this.libroPrestado=true;
     }
 
     public String getTitulo() {
@@ -63,6 +68,13 @@ public class Libro implements MaterialBiblio {
     public void setContador(int contador) {
         this.contador = contador;
     }
+    public boolean isLibroPrestado() {
+        return libroPrestado;
+    }
+
+    public void setLibroPrestado(boolean libroPrestado) {
+        this.libroPrestado = libroPrestado;
+    }
 
     @Override
     public void verSinopsis() {
@@ -79,10 +91,12 @@ public class Libro implements MaterialBiblio {
             System.out.println("El libro está disponible para prestar.");
             System.out.println("Ingrese el titulo del libro:");
             String idLibro = Entrada.leerString();
-            if (!idLibro.isEmpty() && idLibro.equalsIgnoreCase(titulo)) { 
-                System.out.println("hola");
-                contador--;
-                librosPrestados.add(idLibro);
+            if (!idLibro.isEmpty() && idLibro.equalsIgnoreCase(titulo)) {
+                setContador(getContador()-1);
+                
+                libros.remove(idLibro);
+
+                librosPrestados.addAll(libros);
                 System.out.println("Libro prestado correctamente.");
             } else {
                 System.out.println("El titulo ingresado no coincide con el del libro.");
@@ -91,6 +105,8 @@ public class Libro implements MaterialBiblio {
             System.out.println("El libro no está disponible para prestar.");
         }
     }
+
+    
 
     private String generarIdentificador() {
         String apellido = autor.substring(autor.lastIndexOf(' ') +1);
@@ -107,29 +123,41 @@ public class Libro implements MaterialBiblio {
         System.out.println("Fecha de Publicación: " + fechaPub);
         System.out.println("ID: " + id);
         System.out.println("Cantidad Disponible: " + contador);
-        if (!librosPrestados.isEmpty()) {
+    
+        if (libroPrestado) {
             System.out.println("Libros Prestados:");
-            for (String libroPrestado : librosPrestados) {
-                System.out.println("- " + libroPrestado);
+            for (String tituloLibro : librosPrestados) {
+                System.out.println("- " + tituloLibro);
             }
         } else {
             System.out.println("Libros Prestados: Ninguno");
         }
     }
+    
 
-    public void detalleEliminar(){
-        System.out.println("Título: " + titulo);
-        
-    }
+     public void devolverLibro() {
+        System.out.println("Libros prestados: ");
+        for (String string : librosPrestados) {
 
-    public void comprobarTitulo(String titulo) {
-        if (this.titulo.equalsIgnoreCase(titulo)) {
-            System.out.println("El título coincide.");
-        } else {
-            System.out.println("El título no coincide.");
+            System.out.println("-" + string);
+
         }
-        
 
+        for (String libro : librosPrestados) {
+            if (libro.isEmpty()) {
+                System.out.println("no hay libro para devolver");
+            }
+
+            System.out.println("Escribe el libro a devolver ");
+            String libroPrestadosAux = Entrada.leerString();
+            if (libroPrestadosAux.equalsIgnoreCase(libroPrestadosAux)) {
+                System.out.println("Se ha devuelto el libro: " + libro);
+            } else {
+                System.out.println("No hay libro ");
+            }
+        }
 
     }
+
+  
 }

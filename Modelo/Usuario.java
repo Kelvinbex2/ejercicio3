@@ -3,7 +3,7 @@ package Modelo;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class Usuario extends Personal {
+public class Usuario extends Personal  {
     private String id;
     private ArrayList<MaterialBiblio> librosPrest;
 
@@ -42,5 +42,10 @@ public class Usuario extends Personal {
         String fecString = format.format(fechNac);
         return idNombre + "-" + fecString;
     }
+
+    
+
+    
+
 
 }

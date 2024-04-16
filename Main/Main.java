@@ -8,7 +8,7 @@ import Modelo.Biblioteca;
 import Modelo.Bibliotecario;
 import Modelo.Entrada;
 import Modelo.Libro;
-import Modelo.MaterialBiblio;
+
 
 public class Main {
     static int idBiblioteca = 0;
