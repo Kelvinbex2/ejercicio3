@@ -13,6 +13,8 @@ public class Libro implements MaterialBiblio {
     private int contador;
     private List<String> librosPrestados;
 
+    
+
     public Libro() {
         this.librosPrestados = new ArrayList<>();
     }
@@ -22,7 +24,7 @@ public class Libro implements MaterialBiblio {
         this.autor = autor;
         this.fechaPub = fechaPub;
         this.id = generarIdentificador();
-        this.contador = 0; // Inicializar el contador en 1 al crear un nuevo libro
+        this.contador++;
         this.librosPrestados = new ArrayList<>();
     }
 
@@ -73,16 +75,17 @@ public class Libro implements MaterialBiblio {
 
     @Override
     public void prestar() {
-        if (contador > 0) {
+        if (contador >= 0) {
             System.out.println("El libro está disponible para prestar.");
-            System.out.println("Ingrese el ID del libro:");
+            System.out.println("Ingrese el titulo del libro:");
             String idLibro = Entrada.leerString();
-            if (this.id.equals(idLibro)) {
+            if (!idLibro.isEmpty() && idLibro.equalsIgnoreCase(titulo)) { 
+                System.out.println("hola");
                 contador--;
                 librosPrestados.add(idLibro);
                 System.out.println("Libro prestado correctamente.");
             } else {
-                System.out.println("El ID ingresado no coincide con el del libro.");
+                System.out.println("El titulo ingresado no coincide con el del libro.");
             }
         } else {
             System.out.println("El libro no está disponible para prestar.");
@@ -90,7 +93,7 @@ public class Libro implements MaterialBiblio {
     }
 
     private String generarIdentificador() {
-        String apellido = autor.substring(autor.lastIndexOf(' ') + 1);
+        String apellido = autor.substring(autor.lastIndexOf(' ') +1);
         String tresPrimerasLetras = apellido.substring(0, Math.min(apellido.length(), 3)).toUpperCase();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
         String fechaFormateada = fechaPub.format(formatter);
@@ -114,11 +117,19 @@ public class Libro implements MaterialBiblio {
         }
     }
 
+    public void detalleEliminar(){
+        System.out.println("Título: " + titulo);
+        
+    }
+
     public void comprobarTitulo(String titulo) {
         if (this.titulo.equalsIgnoreCase(titulo)) {
             System.out.println("El título coincide.");
         } else {
             System.out.println("El título no coincide.");
         }
+        
+
+
     }
 }

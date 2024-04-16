@@ -95,7 +95,8 @@ public class Biblioteca {
 
     
     public void detalle() {
-        System.out.println("uuuuuuu");
+        int i = 1;
+        System.out.println("Biblioteca "+ getNombre());
         StringBuilder sb = new StringBuilder();
         sb.append("Nombre: ").append(getNombre()).append("\n").append("Calle: ").append(getCalle());
         System.out.println(sb.toString());
