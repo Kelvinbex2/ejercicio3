@@ -8,6 +8,7 @@ import Modelo.Biblioteca;
 import Modelo.Bibliotecario;
 import Modelo.Entrada;
 import Modelo.Libro;
+import Modelo.Usuario;
 
 
 public class Main {
@@ -15,6 +16,7 @@ public class Main {
     static List<Biblioteca> bibliotecas = new ArrayList<>();
     static Bibliotecario bibliotecario = new Bibliotecario();
     static Libro materialBiblio = new Libro();
+    
 
     public static void main(String[] args) {
         crearMenu();
@@ -31,6 +33,8 @@ public class Main {
             System.out.println("4: Mostrar Libros");
             System.out.println("5: Prestar Libro");
             System.out.println("6: Eliminar Libro");
+            System.out.println("7. Agregar Usuario");
+            System.out.println("8. Mostrar Usuario");
             System.out.println("0: Salir");
             System.out.print("Ingrese una opción: ");
             opc = Entrada.leerEntero();
@@ -53,6 +57,14 @@ public class Main {
                     break;
                 case 6:
                     eliminar();
+                    break;
+
+                case 7:
+                    bibliotecario.crearUsuario();
+                    break;
+                    
+                case 8:
+                    bibliotecario.mostrarUsuario();
                     break;
                 case 0:
                     System.out.println("Saliendo del programa...");

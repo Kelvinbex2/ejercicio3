@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -108,12 +109,14 @@ public class Libro implements MaterialBiblio {
 
     
 
-    private String generarIdentificador() {
-        String apellido = autor.substring(autor.lastIndexOf(' ') +1);
-        String tresPrimerasLetras = apellido.substring(0, Math.min(apellido.length(), 3)).toUpperCase();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        String fechaFormateada = fechaPub.format(formatter);
-        return tresPrimerasLetras + "-" + fechaFormateada;
+    public String generarIdentificador() {
+        String[] nombresGen = autor.split(" ");
+        String id = nombresGen[nombresGen.length - 1];
+        String idNombre = id.substring(0, Math.min(id.length(), 4)).toUpperCase();
+
+        SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+        String fecString = format.format(fechaPub);
+        return idNombre + "-" + fecString;
     }
 
     public void detalle() {
@@ -135,29 +138,7 @@ public class Libro implements MaterialBiblio {
     }
     
 
-     public void devolverLibro() {
-        System.out.println("Libros prestados: ");
-        for (String string : librosPrestados) {
-
-            System.out.println("-" + string);
-
-        }
-
-        for (String libro : librosPrestados) {
-            if (libro.isEmpty()) {
-                System.out.println("no hay libro para devolver");
-            }
-
-            System.out.println("Escribe el libro a devolver ");
-            String libroPrestadosAux = Entrada.leerString();
-            if (libroPrestadosAux.equalsIgnoreCase(libroPrestadosAux)) {
-                System.out.println("Se ha devuelto el libro: " + libro);
-            } else {
-                System.out.println("No hay libro ");
-            }
-        }
-
-    }
+     
 
   
 }

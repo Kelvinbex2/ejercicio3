@@ -7,6 +7,11 @@ public class Usuario extends Personal  {
     private String id;
     private ArrayList<MaterialBiblio> librosPrest;
 
+    public Usuario() {
+        super("","","");
+        this.librosPrest = new ArrayList<>();
+    }
+
     public Usuario(String nombre, String fechNac, String tipo) {
         super(nombre, fechNac, tipo);
         this.id = generarIdentificador();
@@ -29,9 +34,7 @@ public class Usuario extends Personal  {
         this.librosPrest = librosPrest;
     }
 
-    public void devolverLibro(Libro libro) {
-
-    }
+   
 
     public String generarIdentificador() {
         String[] nombresGen = nombre.split(" ");
@@ -41,6 +44,40 @@ public class Usuario extends Personal  {
         SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
         String fecString = format.format(fechNac);
         return idNombre + "-" + fecString;
+    }
+
+    public void devolverLibro() {
+        System.out.println("Libros prestados: ");
+        for (MaterialBiblio string : librosPrest) {
+
+            System.out.println("-" + string);
+
+        }
+
+        for (MaterialBiblio libro : librosPrest) {
+            if (librosPrest.isEmpty()) {
+                System.out.println("no hay libro para devolver");
+            }
+
+            System.out.println("Escribe el libro a devolver ");
+            String libroPrestadosAux = Entrada.leerString();
+            if (libroPrestadosAux.equalsIgnoreCase(libroPrestadosAux)) {
+                System.out.println("Se ha devuelto el libro: " + libro);
+            } else {
+                System.out.println("No hay libro ");
+            }
+        }
+
+    }
+
+
+
+
+
+    @Override
+    public String toString() {
+        return "Usuario [nombre=" + nombre + ", fechNac=" + fechNac + ", id=" + id + ", tipo=" + tipo + ", librosPrest="
+                + librosPrest + "]";
     }
 
     
