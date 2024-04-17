@@ -115,6 +115,16 @@ public class Libro implements MaterialBiblio, Comparable<Libro> {
     }
     
 
+    public void devolver() {
+        if (libroPrestado) {
+            libroPrestado = false;  // Marcar el libro como no prestado
+            contador++;  // Aumentar el contador de libros disponibles
+            System.out.println("¡Libro devuelto con éxito!");
+        } else {
+            System.out.println("Este libro no está prestado actualmente.");
+        }
+    }
+
     @Override
     public int compareTo(Libro o) {
         return this.titulo.compareToIgnoreCase(o.titulo);
