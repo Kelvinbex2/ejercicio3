@@ -24,7 +24,7 @@ public class Libro implements MaterialBiblio, Comparable<Libro> {
         this.fechaPub = fechaPub;
         this.id = generarIdentificador();
         this.contador++;
-        this.libroPrestado = true;
+        this.libroPrestado = false;
     }
 
     public String getTitulo() {
@@ -83,13 +83,14 @@ public class Libro implements MaterialBiblio, Comparable<Libro> {
     @Override
     public void prestar() {
         if (contador > 0) {
-            setContador(getContador() - 1);
-            
-            
-        }else {
-            System.out.println("El libro no esta disponible ");
+            contador--;  // Decrementar el contador para indicar que un libro ha sido prestado
+            libroPrestado = true;  // Marcar el libro como prestado
+            System.out.println("¡Libro prestado con éxito!");
+        } else {
+            System.out.println("El libro no está disponible para prestar.");
         }
     }
+    
 
     
 
@@ -104,25 +105,15 @@ public class Libro implements MaterialBiblio, Comparable<Libro> {
     }
 
     public void detalle() {
-        Usuario usuario = new Usuario();
         System.out.println("Detalles del Libro:");
         System.out.println("Título: " + titulo);
         System.out.println("Autor: " + autor);
         System.out.println("Fecha de Publicación: " + fechaPub);
         System.out.println("ID: " + id);
         System.out.println("Cantidad Disponible: " + contador);
-    
-
-        if (libroPrestado) {
-            
-            System.out.println("Libros Prestados:" + isLibroPrestado());
-            for (Libro tituloLibro : usuario.getLibrosPrest()) {
-                System.out.println("- " + tituloLibro.getContador()  );
-            }
-        } else {
-            System.out.println("Libros Prestados: Ninguno");
-        }
+        System.out.println("Estado de Préstamo: " + (libroPrestado ? "Prestado" : "Disponible"));
     }
+    
 
     @Override
     public int compareTo(Libro o) {

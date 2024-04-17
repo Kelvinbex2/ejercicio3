@@ -1,21 +1,24 @@
 package Modelo;
 
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Usuario extends Personal {
     private String id;
     private ArrayList<Libro> librosPrest;
+    private ArrayList<Libro> listaMaterialBiblios;
 
     public Usuario() {
         super("", "", "");
         this.librosPrest = new ArrayList<>();
+        this.listaMaterialBiblios = new ArrayList<>();
     }
 
     public Usuario(String nombre, String fechNac, String tipo) {
         super(nombre, fechNac, tipo);
         this.id = generarIdentificador();
         this.librosPrest = new ArrayList<>();
+        this.listaMaterialBiblios = new ArrayList<>();
     }
 
     public String getId() {
@@ -39,13 +42,34 @@ public class Usuario extends Personal {
         String id = nombresGen[nombresGen.length - 1];
         String idNombre = id.substring(0, Math.min(id.length(), 4)).toUpperCase();
 
-        SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
-        String fecString = format.format(fechNac);
-        return idNombre + "-" + fecString;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        String fechaFormateada = fechNac.formatted(formatter);
+
+        return idNombre + "-" + fechaFormateada;
     }
 
+    public void prestar(String titulo) {
+        boolean libroEncontrado = false;
 
+        for (Libro libro : listaMaterialBiblios) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo) && libro.getContador() > 0) {
+                libro.prestar();  // Intentar prestar el libro
+                if (libro.isLibroPrestado()) {  // Verificar si el libro fue prestado con éxito
+                    librosPrest.add(libro);  // Agregar el libro a la lista de libros prestados del usuario
+                    System.out.println("¡Libro prestado con éxito!");
+                } else {
+                    System.out.println("No se pudo prestar el libro.");
+                }
+                libroEncontrado = true;
+                break; // Salir del bucle una vez que se realiza el préstamo
+            }
+        }
 
+        if (!libroEncontrado) {
+            System.out.println("El libro no está disponible para prestar o no existe en la biblioteca.");
+        }
+    }
+    
     
 
     @Override

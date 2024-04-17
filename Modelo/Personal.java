@@ -2,13 +2,9 @@ package Modelo;
 
 public abstract class Personal {
 
-    
-
-    protected  String nombre;
+    protected String nombre;
     protected String fechNac;
-    protected String  tipo;
-
-   
+    protected String tipo;
 
     public Personal(String nombre, String fechNac, String tipo) {
         this.nombre = nombre;

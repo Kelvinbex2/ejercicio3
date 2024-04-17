@@ -126,25 +126,7 @@ public class Biblioteca {
     }
 
 
-    public void prestar(String titulo) {
-        boolean libroEncontrado = false;
-        Usuario usuario = new Usuario(); 
-    
-        
-        for (Libro libro : listaMaterialBiblios) {
-            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
-                
-                libro.prestar();
-                usuario.getLibrosPrest().add(libro); // Agregar el libro a la lista de libros prestados del usuario
-                libroEncontrado = true;
-                break; // Salir del bucle una vez que se realiza el préstamo
-            }
-        }
-    
-        if (!libroEncontrado) {
-            System.out.println("El libro no está disponible para prestar o no existe en la biblioteca.");
-        }
-    }
+   
     
     public void mostrarLibros() {
         if (listaMaterialBiblios.isEmpty()) {
