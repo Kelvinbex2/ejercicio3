@@ -53,15 +53,17 @@ public class Usuario extends Personal {
 
         for (Libro libro : listaMaterialBiblios) {
             if (libro.getTitulo().equalsIgnoreCase(titulo) && libro.getContador() > 0) {
-                libro.prestar();  
-                if (libro.isLibroPrestado()) {  // Verificar si el libro fue prestado con éxito
-                    librosPrest.add(libro);  // Agregar el libro a la lista de libros prestados del usuario
+                libro.prestar();
+                if (libro.isLibroPrestado()) { // Verificar si el libro fue prestado con éxito
+                    librosPrest.add(libro); // Agregar el libro prestado
+
                     System.out.println("¡Libro prestado con éxito!");
                 } else {
                     System.out.println("No se pudo prestar el libro.");
                 }
                 libroEncontrado = true;
-                break; // Salir del bucle una vez que se realiza el préstamo
+                break; // Salir del bucle
+
             }
         }
 
@@ -69,8 +71,6 @@ public class Usuario extends Personal {
             System.out.println("El libro no está disponible para prestar o no existe en la biblioteca.");
         }
     }
-    
-    
 
     @Override
     public String toString() {
