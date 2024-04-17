@@ -53,7 +53,7 @@ public class Usuario extends Personal {
 
         for (Libro libro : listaMaterialBiblios) {
             if (libro.getTitulo().equalsIgnoreCase(titulo) && libro.getContador() > 0) {
-                libro.prestar();  // Intentar prestar el libro
+                libro.prestar();  
                 if (libro.isLibroPrestado()) {  // Verificar si el libro fue prestado con éxito
                     librosPrest.add(libro);  // Agregar el libro a la lista de libros prestados del usuario
                     System.out.println("¡Libro prestado con éxito!");
