@@ -1,27 +1,21 @@
 package Modelo;
-
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Libro implements MaterialBiblio {
+
+
+
+public class Libro implements MaterialBiblio, Comparable<Libro> {
     private String titulo;
     private String autor;
     private LocalDate fechaPub;
     private String id;
     private int contador;
-    private List<String> librosPrestados;
-    private List<String> libros= new ArrayList<>();
+   
     private boolean libroPrestado;
 
-    
-
-   
-
     public Libro() {
-        this.librosPrestados = new ArrayList<>();
+       
     }
 
     public Libro(String titulo, String autor, LocalDate fechaPub) {
@@ -30,8 +24,7 @@ public class Libro implements MaterialBiblio {
         this.fechaPub = fechaPub;
         this.id = generarIdentificador();
         this.contador++;
-        this.librosPrestados = new ArrayList<>();
-        this.libroPrestado=true;
+        this.libroPrestado = true;
     }
 
     public String getTitulo() {
@@ -69,6 +62,7 @@ public class Libro implements MaterialBiblio {
     public void setContador(int contador) {
         this.contador = contador;
     }
+
     public boolean isLibroPrestado() {
         return libroPrestado;
     }
@@ -88,22 +82,12 @@ public class Libro implements MaterialBiblio {
 
     @Override
     public void prestar() {
-        if (contador >= 0) {
-            System.out.println("El libro está disponible para prestar.");
-            System.out.println("Ingrese el titulo del libro:");
-            String idLibro = Entrada.leerString();
-            if (!idLibro.isEmpty() && idLibro.equalsIgnoreCase(titulo)) {
-                setContador(getContador()-1);
-                
-                libros.remove(idLibro);
-
-                librosPrestados.addAll(libros);
-                System.out.println("Libro prestado correctamente.");
-            } else {
-                System.out.println("El titulo ingresado no coincide con el del libro.");
-            }
-        } else {
-            System.out.println("El libro no está disponible para prestar.");
+        if (contador > 0) {
+            setContador(getContador() - 1);
+            
+            
+        }else {
+            System.out.println("El libro no esta disponible ");
         }
     }
 
@@ -114,12 +98,13 @@ public class Libro implements MaterialBiblio {
         String id = nombresGen[nombresGen.length - 1];
         String idNombre = id.substring(0, Math.min(id.length(), 4)).toUpperCase();
 
-        SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
-        String fecString = format.format(fechaPub);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        String fecString = fechaPub.format(formatter);
         return idNombre + "-" + fecString;
     }
 
     public void detalle() {
+        Usuario usuario = new Usuario();
         System.out.println("Detalles del Libro:");
         System.out.println("Título: " + titulo);
         System.out.println("Autor: " + autor);
@@ -127,18 +112,21 @@ public class Libro implements MaterialBiblio {
         System.out.println("ID: " + id);
         System.out.println("Cantidad Disponible: " + contador);
     
+
         if (libroPrestado) {
-            System.out.println("Libros Prestados:");
-            for (String tituloLibro : librosPrestados) {
-                System.out.println("- " + tituloLibro);
+            
+            System.out.println("Libros Prestados:" + isLibroPrestado());
+            for (Libro tituloLibro : usuario.getLibrosPrest()) {
+                System.out.println("- " + tituloLibro.getContador()  );
             }
         } else {
             System.out.println("Libros Prestados: Ninguno");
         }
     }
-    
 
-     
+    @Override
+    public int compareTo(Libro o) {
+        return this.titulo.compareToIgnoreCase(o.titulo);
+    }
 
-  
 }

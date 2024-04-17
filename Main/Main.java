@@ -10,15 +10,18 @@ import Modelo.Entrada;
 import Modelo.Libro;
 import Modelo.Usuario;
 
-
 public class Main {
     static int idBiblioteca = 0;
     static List<Biblioteca> bibliotecas = new ArrayList<>();
-    static Bibliotecario bibliotecario = new Bibliotecario();
+    static Biblioteca bibliotecario;
+    static Bibliotecario bibliotecario1 = new Bibliotecario();
     static Libro materialBiblio = new Libro();
-    
+    static Usuario usuario = new Usuario();
 
     public static void main(String[] args) {
+        bibliotecario = new Biblioteca("Kelvin", "Fuenla");
+        Libro libro = new Libro("h", "p", pedirFechaPublicacion());
+        bibliotecario.aniadirLibro(libro);
         crearMenu();
     }
 
@@ -27,44 +30,40 @@ public class Main {
 
         do {
             System.out.println("\n\tMenu");
-            System.out.println("1: Añadir Biblioteca");
-            System.out.println("2: Mostrar Bibliotecas");
-            System.out.println("3: Agregar Libro");
-            System.out.println("4: Mostrar Libros");
-            System.out.println("5: Prestar Libro");
-            System.out.println("6: Eliminar Libro");
-            System.out.println("7. Agregar Usuario");
-            System.out.println("8. Mostrar Usuario");
+            System.out.println("1: Agregar Libro");
+            System.out.println("2: Mostrar Libros");
+            System.out.println("3: Prestar Libro");
+            System.out.println("4: Eliminar Libro");
+            System.out.println("5: Devolver libro");
+            System.out.println("6. Agregar Usuario");
+            System.out.println("7. Mostrar Usuario");
             System.out.println("0: Salir");
             System.out.print("Ingrese una opción: ");
             opc = Entrada.leerEntero();
 
             switch (opc) {
+
                 case 1:
-                    crearBiblioteca();
-                    break;
-                case 2:
-                    mostrarBibliotecas();
-                    break;
-                case 3:
                     crearLibro();
                     break;
-                case 4:
+                case 2:
                     mostrarLibros();
                     break;
+                case 3:
+                    prestar();
+                    break;
+                case 4:
+                    eliminar();
+                    break;
                 case 5:
-                    materialBiblio.prestar();
+                    bibliotecario1.devolverLibro();
                     break;
                 case 6:
-                    eliminar();
+                    bibliotecario1.crearUsuario();
                     break;
 
                 case 7:
-                    bibliotecario.crearUsuario();
-                    break;
-                    
-                case 8:
-                    bibliotecario.mostrarUsuario();
+                    bibliotecario1.mostrarUsuario();
                     break;
                 case 0:
                     System.out.println("Saliendo del programa...");
@@ -78,49 +77,11 @@ public class Main {
 
     private static void mostrarLibros() {
 
-        if (idBiblioteca >= 0 && idBiblioteca < bibliotecas.size()) {
-            Biblioteca bibliotecaSeleccionada = bibliotecas.get(idBiblioteca);
-            System.out.println("Libros disponibles en la biblioteca: " + bibliotecaSeleccionada.getNombre());
-            bibliotecario.mostrarLibros();
-        } else {
-            System.out.println("No hay bibliotecas para mostrar.");
+        bibliotecario.mostrarLibros();
 
-        }
-
-    }
-
-    private static void crearBiblioteca() {
-        System.out.print("Nombre de la Biblioteca: ");
-        String nombre = Entrada.leerString();
-        System.out.print("Dirección de la Biblioteca: ");
-        String direccion = Entrada.leerString();
-
-        Biblioteca biblioteca = new Biblioteca(nombre, direccion);
-        bibliotecas.add(biblioteca);
-        System.out.println("Biblioteca añadida correctamente.");
-    }
-
-    private static void mostrarBibliotecas() {
-        if (bibliotecas.isEmpty()) {
-            System.out.println("No hay bibliotecas para mostrar.");
-        } else {
-            System.out.println("Lista de Bibliotecas: \n");
-            for (Biblioteca biblioteca : bibliotecas) {
-                biblioteca.detalle();
-                System.out.println();
-            }
-            
-        }
     }
 
     private static void crearLibro() {
-        mostrarBibliotecas();
-        System.out.print("Biblioteca: ");
-        idBiblioteca = Entrada.leerEntero() - 1;
-        if (idBiblioteca < 0 || idBiblioteca > bibliotecas.size()) {
-            System.out.println("Biblioteca no válida.");
-            return;
-        }
 
         System.out.print("Título del Libro: ");
         String titulo = Entrada.leerString();
@@ -152,4 +113,14 @@ public class Main {
         bibliotecario.eliminar(titulo);
         System.out.println("Libro eliminado correctamente.");
     }
+
+    public static void prestar() {
+
+        System.out.print("Título del Libro: ");
+        String titulo = Entrada.leerString();
+
+        bibliotecario.prestar(titulo);
+        System.out.println("Libro eliminado correctamente.");
+    }
+
 }

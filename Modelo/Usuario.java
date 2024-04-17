@@ -3,12 +3,12 @@ package Modelo;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class Usuario extends Personal  {
+public class Usuario extends Personal {
     private String id;
-    private ArrayList<MaterialBiblio> librosPrest;
+    private ArrayList<Libro> librosPrest;
 
     public Usuario() {
-        super("","","");
+        super("", "", "");
         this.librosPrest = new ArrayList<>();
     }
 
@@ -26,15 +26,13 @@ public class Usuario extends Personal  {
         this.id = id;
     }
 
-    public ArrayList<MaterialBiblio> getLibrosPrest() {
+    public ArrayList<Libro> getLibrosPrest() {
         return librosPrest;
     }
 
-    public void setLibrosPrest(ArrayList<MaterialBiblio> librosPrest) {
+    public void setLibrosPrest(ArrayList<Libro> librosPrest) {
         this.librosPrest = librosPrest;
     }
-
-   
 
     public String generarIdentificador() {
         String[] nombresGen = nombre.split(" ");
@@ -46,43 +44,14 @@ public class Usuario extends Personal  {
         return idNombre + "-" + fecString;
     }
 
-    public void devolverLibro() {
-        System.out.println("Libros prestados: ");
-        for (MaterialBiblio string : librosPrest) {
-
-            System.out.println("-" + string);
-
-        }
-
-        for (MaterialBiblio libro : librosPrest) {
-            if (librosPrest.isEmpty()) {
-                System.out.println("no hay libro para devolver");
-            }
-
-            System.out.println("Escribe el libro a devolver ");
-            String libroPrestadosAux = Entrada.leerString();
-            if (libroPrestadosAux.equalsIgnoreCase(libroPrestadosAux)) {
-                System.out.println("Se ha devuelto el libro: " + libro);
-            } else {
-                System.out.println("No hay libro ");
-            }
-        }
-
-    }
 
 
-
-
+    
 
     @Override
     public String toString() {
         return "Usuario [nombre=" + nombre + ", fechNac=" + fechNac + ", id=" + id + ", tipo=" + tipo + ", librosPrest="
                 + librosPrest + "]";
     }
-
-    
-
-    
-
 
 }

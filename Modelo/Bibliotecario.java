@@ -35,43 +35,13 @@ public class Bibliotecario extends Personal {
         this.libros = libros;
     }
 
-    public void aniadirLibro(Libro libro) {
-        libros.add(libro);
 
-    }
-
-    public void eliminar(String titulo) {
-        boolean libroEncontradp = false;
-
-        for (Libro libro : libros) {
-            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
-                libros.remove(libro);
-                libroEncontradp = true;
-                break;
-            }
-        }
-
-        if (!libroEncontradp) {
-            System.out.println("No se encontró el libro");
-        }
-
-    }
-
-    public void mostrarLibros() {
-        if (libros.isEmpty()) {
-            System.out.println("No  se encontró el libro en esta biblioteca");
-        }
-        for (Libro libro : libros) {
-
-            libro.detalle();
-        }
-    }
 
     public void crearUsuario() {
-        System.out.println("Usuarion: ");
+        System.out.println("Usuarion: " +USUARIO);
         String us = Entrada.leerString();
 
-        System.out.println("Contraseña");
+        System.out.println("Contraseña" + CONTRSANIA);
         String con = Entrada.leerString();
         if (us.equalsIgnoreCase(USUARIO) && con.equalsIgnoreCase(CONTRSANIA)) {
             Usuario personal;
@@ -90,15 +60,41 @@ public class Bibliotecario extends Personal {
 
     }
 
-    public void mostrarUsuario(){
+    public void mostrarUsuario() {
         if (usuarios.isEmpty()) {
             System.out.println("No hay usuario creado");
-    }
+        }
         for (Usuario usuario : usuarios) {
             usuario.toString();
 
-        
         }
+    }
+
+    // Devuelve un libro prestado por un usuario
+    
+    public Libro devolverLibro() {
+        Usuario usuario = new Usuario();
+        int posicion = 0;
+        boolean devuelto = false;
+        while (!devuelto) {
+            System.out.println("\nIngrese el titulo del libro a devolver: ");
+            String tituloDevuelto = Entrada.leerString();
+
+            for (int i = 0; i < usuario.getLibrosPrest().size(); i++) {
+                if (tituloDevuelto.equalsIgnoreCase(usuario.getLibrosPrest().get(i).getTitulo())) {
+                    usuario.getLibrosPrest().remove(i);
+                    devuelto = true;
+                    break;
+                }
+            }
+            if (!devuelto) {
+                System.out.println("El libro no se encuentra prestado");
+            } else {
+                System.out.println("Se ha devuelto el libro: " + usuario.getLibrosPrest().get(posicion));
+            }
+            posicion++;
+        }
+        return usuario.getLibrosPrest().get(posicion);
     }
 
 }

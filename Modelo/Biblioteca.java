@@ -8,13 +8,13 @@ import java.util.List;
 public class Biblioteca {
     private String nombre;
     private String calle;
-    private List<MaterialBiblio> listaMaterialBiblios;
-    private List<Usuario> lUsuarios;
+    private List<Libro> listaMaterialBiblios;
+    private List<Usuario> iUsuarios;
     private List<Personal> personals;
 
     public Biblioteca(String nombre, String calle) {
         this.listaMaterialBiblios = new ArrayList<>();
-        this.lUsuarios = new ArrayList<>();
+        this.iUsuarios = new ArrayList<>();
         this.personals = new ArrayList<>();
         this.nombre = nombre;
         this.calle = calle;
@@ -36,20 +36,20 @@ public class Biblioteca {
         this.calle = calle;
     }
 
-    public List<MaterialBiblio> getListaMaterialBiblios() {
+    public List<Libro> getListaMaterialBiblios() {
         return listaMaterialBiblios;
     }
 
-    public void setListaMaterialBiblios(List<MaterialBiblio> listaMaterialBiblios) {
+    public void setListaMaterialBiblios(List<Libro> listaMaterialBiblios) {
         this.listaMaterialBiblios = listaMaterialBiblios;
     }
 
     public List<Usuario> getlUsuarios() {
-        return lUsuarios;
+        return iUsuarios;
     }
 
-    public void setlUsuarios(List<Usuario> lUsuarios) {
-        this.lUsuarios = lUsuarios;
+    public void setlUsuarios(List<Usuario> iUsuarios) {
+        this.iUsuarios = iUsuarios;
     }
 
     public List<Personal> getPersonals() {
@@ -101,5 +101,58 @@ public class Biblioteca {
         sb.append("Nombre: ").append(getNombre()).append("\n").append("Calle: ").append(getCalle());
         System.out.println(sb.toString());
         
+    }
+
+    public void aniadirLibro(Libro libro) {
+        listaMaterialBiblios.add(libro);
+
+    }
+
+    public void eliminar(String titulo) {
+        boolean libroEncontradp = false;
+
+        for (Libro libro : listaMaterialBiblios) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                listaMaterialBiblios.remove(libro);
+                libroEncontradp = true;
+                break;
+            }
+        }
+
+        if (!libroEncontradp) {
+            System.out.println("No se encontró el libro");
+        }
+
+    }
+
+
+    public void prestar(String titulo) {
+        boolean libroEncontrado = false;
+        Usuario usuario = new Usuario(); 
+    
+        
+        for (Libro libro : listaMaterialBiblios) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                
+                libro.prestar();
+                usuario.getLibrosPrest().add(libro); // Agregar el libro a la lista de libros prestados del usuario
+                libroEncontrado = true;
+                break; // Salir del bucle una vez que se realiza el préstamo
+            }
+        }
+    
+        if (!libroEncontrado) {
+            System.out.println("El libro no está disponible para prestar o no existe en la biblioteca.");
+        }
+    }
+    
+    public void mostrarLibros() {
+        if (listaMaterialBiblios.isEmpty()) {
+            System.out.println("No  se encontró el libro en esta biblioteca");
+        }
+        for (Libro libro : listaMaterialBiblios) {
+
+            libro.detalle();
+        }
     }
 }
