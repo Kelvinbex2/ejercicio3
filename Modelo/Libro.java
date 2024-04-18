@@ -85,10 +85,8 @@ public class Libro implements MaterialBiblio, Comparable<Libro> {
         if (contador > 0) {
             contador--;  // Decrementar el contador para indicar que un libro ha sido prestado
             libroPrestado = true;  // Marcar el libro como prestado
-            System.out.println("¡Libro prestado con éxito!");
-        } else {
-            System.out.println("El libro no está disponible para prestar.");
-        }
+        
+        } 
     }
     
 

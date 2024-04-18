@@ -11,6 +11,15 @@ public class Biblioteca {
     private List<Libro> listaMaterialBiblios;
     private List<Usuario> iUsuarios;
     private List<Personal> personals;
+    private ArrayList<Libro> listaMaterial= new ArrayList<>();
+
+    public ArrayList<Libro> getListaMaterial() {
+        return listaMaterial;
+    }
+
+    public void setListaMaterial(ArrayList<Libro> listaMaterial) {
+        this.listaMaterial = listaMaterial;
+    }
 
     public Biblioteca(String nombre, String calle) {
         this.listaMaterialBiblios = new ArrayList<>();
@@ -95,7 +104,7 @@ public class Biblioteca {
 
     
     public void detalle() {
-        int i = 1;
+        
         System.out.println("Biblioteca "+ getNombre());
         StringBuilder sb = new StringBuilder();
         sb.append("Nombre: ").append(getNombre()).append("\n").append("Calle: ").append(getCalle());
@@ -137,4 +146,49 @@ public class Biblioteca {
             libro.detalle();
         }
     }
+
+    public void prestar(String titulo) {
+        boolean libroEncontrado = false;
+
+        for (Libro libro : listaMaterialBiblios) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo) && libro.getContador() > 0) {
+                libro.prestar();
+                if (libro.isLibroPrestado()) { // Verificar si el libro fue prestado con éxito
+                    listaMaterial.add(libro);// Agregar el libro prestado
+
+                    System.out.println("¡Libro prestado con éxito!");
+                } else {
+                    System.out.println("No se pudo prestar el libro.");
+                }
+                libroEncontrado = true;
+                break; // Salir del bucle
+
+            }
+        }
+
+        if (!libroEncontrado) {
+            System.out.println("El libro no está disponible para prestar o no existe en la biblioteca.");
+        }
+    }
+
+
+    public void devolver(String titulo) {
+        boolean libroEncontrado = false;
+
+        // Buscar el libro en la lista de libros prestados por el usuario
+        for (Libro libro : listaMaterial) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                libro.devolver();  // Devolver el libro (actualiza el estado y el contador)
+                listaMaterial.remove(libro);  // Eliminar el libro de la lista de libros prestados
+                System.out.println("¡Libro devuelto con éxito!");
+                libroEncontrado = true;
+                break;
+            }
+        }
+
+        if (!libroEncontrado) {
+            System.out.println("No tienes prestado este libro.");
+        }
+    }
+   
 }

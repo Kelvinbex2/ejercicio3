@@ -119,8 +119,8 @@ public class Main {
         System.out.print("Título del Libro: ");
         String titulo = Entrada.leerString();
 
-        usuario.prestar(titulo);
-        System.out.println("Libro eliminado correctamente.");
+        bibliotecario.prestar(titulo);
+        
     }
 
 }
