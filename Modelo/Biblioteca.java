@@ -175,10 +175,12 @@ public class Biblioteca {
     public void devolver(String titulo) {
         boolean libroEncontrado = false;
 
-        // Buscar el libro en la lista de libros prestados por el usuario
+        for (Usuario usuario : iUsuarios) {
+            
+        }
         for (Libro libro : listaMaterial) {
             if (libro.getTitulo().equalsIgnoreCase(titulo)) {
-                libro.devolver();  // Devolver el libro (actualiza el estado y el contador)
+                libro.devolver();  
                 listaMaterial.remove(libro);  // Eliminar el libro de la lista de libros prestados
                 System.out.println("¡Libro devuelto con éxito!");
                 libroEncontrado = true;
