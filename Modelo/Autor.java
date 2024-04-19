@@ -18,4 +18,12 @@ public class Autor extends Personal {
     public void setLibrosEscritos(List<Libro> librosEscritos) {
         this.librosEscritos = librosEscritos;
     }
+
+    @Override
+    public void detalle(){
+        System.out.println("\tAutor: ");
+        System.out.println("Nombre: " + getNombre());
+        System.out.println("FechaNac" + getFechNac());
+        System.out.println("Tipo" + getTipo());
+    }
 }

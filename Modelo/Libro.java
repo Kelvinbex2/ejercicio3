@@ -1,8 +1,7 @@
 package Modelo;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-
 
 
 public class Libro implements MaterialBiblio, Comparable<Libro> {
@@ -11,11 +10,11 @@ public class Libro implements MaterialBiblio, Comparable<Libro> {
     private LocalDate fechaPub;
     private String id;
     private int contador;
-   
+
     private boolean libroPrestado;
 
     public Libro() {
-       
+
     }
 
     public Libro(String titulo, String autor, LocalDate fechaPub) {
@@ -83,14 +82,11 @@ public class Libro implements MaterialBiblio, Comparable<Libro> {
     @Override
     public void prestar() {
         if (contador > 0) {
-            contador--;  // Decrementar el contador para indicar que un libro ha sido prestado
-            libroPrestado = true;  // Marcar el libro como prestado
-        
-        } 
-    }
-    
+            contador--; // Decrementar el contador para indicar que un libro ha sido prestado
+            libroPrestado = true; // Marcar el libro como prestado
 
-    
+        }
+    }
 
     public String generarIdentificador() {
         String[] nombresGen = autor.split(" ");
@@ -110,22 +106,24 @@ public class Libro implements MaterialBiblio, Comparable<Libro> {
         System.out.println("ID: " + id);
         System.out.println("Cantidad Disponible: " + contador);
         System.out.println("Estado de Préstamo: " + (libroPrestado ? "Prestado" : "Disponible"));
+        System.out.println();
     }
-    
 
     public void devolver() {
         if (libroPrestado) {
-            libroPrestado = false;  // Marcar el libro como no prestado
-            contador++;  // Aumentar el contador de libros disponibles
-            System.out.println("¡Libro devuelto con éxito!");
+            libroPrestado = false; // Marcar el libro como no prestado
+            setContador(contador + 1); // Incrementar el contador para indicar que un libro ha sido devuelto
+
         } else {
             System.out.println("Este libro no está prestado actualmente.");
         }
     }
 
+  
+
     @Override
     public int compareTo(Libro o) {
-        return this.titulo.compareToIgnoreCase(o.titulo);
+        return this.titulo.compareToIgnoreCase(o.getTitulo());
     }
 
 }

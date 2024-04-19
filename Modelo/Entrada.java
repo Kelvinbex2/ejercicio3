@@ -1,4 +1,6 @@
 package Modelo;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Entrada {
@@ -13,9 +15,16 @@ public class Entrada {
 
     public static int leerEntero() {
         int num = 0;
-        num = sc.nextInt();
+        try {
 
-        sc.nextLine(); 
+            num = sc.nextInt();
+
+        } catch (InputMismatchException e) {
+            System.out.println(e + " Debe ser numero");
+        } finally {
+            sc.nextLine();
+        }
+
         return num;
 
     }

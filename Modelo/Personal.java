@@ -35,5 +35,8 @@ public abstract class Personal {
     public void setFechNac(String fechNac) {
         this.fechNac = fechNac;
     }
+    public void detalle(){
+        
+    }
 
 }

@@ -1,9 +1,9 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-
-
 
 public class Biblioteca {
     private String nombre;
@@ -11,7 +11,7 @@ public class Biblioteca {
     private List<Libro> listaMaterialBiblios;
     private List<Usuario> iUsuarios;
     private List<Personal> personals;
-    private ArrayList<Libro> listaMaterial= new ArrayList<>();
+    private ArrayList<Libro> listaMaterial = new ArrayList<>();
 
     public ArrayList<Libro> getListaMaterial() {
         return listaMaterial;
@@ -74,6 +74,7 @@ public class Biblioteca {
         System.out.println("Que personal quieres aniadir");
         System.out.println("1. Usuario");
         System.out.println("2. Autor");
+        System.out.println("3. Bibliotecario");
         System.out.print("Elege: ");
         num = Entrada.leerEntero();
         return num;
@@ -84,10 +85,10 @@ public class Biblioteca {
         System.out.print("Nombre: ");
         String nombre = Entrada.leerString();
 
-        System.out.println("Fecha Nacimiento (formato: dd-MM-yyyy): ");
+        System.out.println("Fecha Nacimiento (formato: yyyy-MM-dd): ");
         String fechNac = Entrada.leerString();
 
-        System.out.print("Tipo (Usuario/Autor): ");
+        System.out.print("Tipo (Usuario/Autor/Bibliotecario): ");
         String tipo = Entrada.leerString();
 
         if (num == 1 && tipo.equalsIgnoreCase("Usuario")) {
@@ -96,20 +97,23 @@ public class Biblioteca {
         } else if (num == 2 && tipo.equalsIgnoreCase("Autor")) {
             Personal auPersonal = new Autor(nombre, fechNac, tipo);
             personals.add(auPersonal);
+        } else if (num == 3 && tipo.equalsIgnoreCase("Bibliotecario")) {
+            Personal bibPersonal = new Bibliotecario(nombre, fechNac, tipo);
+            personals.add(bibPersonal);
         } else {
-            System.out.println("Error");
+            System.out.println("No se ha creado el personal");
+
         }
 
     }
 
-    
     public void detalle() {
-        
-        System.out.println("Biblioteca "+ getNombre());
+
+        System.out.println("Biblioteca " + getNombre());
         StringBuilder sb = new StringBuilder();
         sb.append("Nombre: ").append(getNombre()).append("\n").append("Calle: ").append(getCalle());
         System.out.println(sb.toString());
-        
+
     }
 
     public void aniadirLibro(Libro libro) {
@@ -134,9 +138,6 @@ public class Biblioteca {
 
     }
 
-
-   
-    
     public void mostrarLibros() {
         if (listaMaterialBiblios.isEmpty()) {
             System.out.println("No  se encontró el libro en esta biblioteca");
@@ -171,26 +172,34 @@ public class Biblioteca {
         }
     }
 
-
     public void devolver(String titulo) {
         boolean libroEncontrado = false;
 
-        for (Usuario usuario : iUsuarios) {
-            
-        }
         for (Libro libro : listaMaterial) {
             if (libro.getTitulo().equalsIgnoreCase(titulo)) {
-                libro.devolver();  
-                listaMaterial.remove(libro);  // Eliminar el libro de la lista de libros prestados
+                libro.devolver();
                 System.out.println("¡Libro devuelto con éxito!");
+                listaMaterial.remove(libro);// Eliminarlo de la lista de libros prestados
                 libroEncontrado = true;
+                Collections.sort(listaMaterialBiblios);// ordenar por titulo
                 break;
             }
         }
-
         if (!libroEncontrado) {
-            System.out.println("No tienes prestado este libro.");
+            System.out.println("El libro no está disponible para devolver o no existe en la biblioteca.");
         }
     }
-   
+
+    public void mostrarPersonals() {
+        for (Personal personal : personals) {
+            if (personal instanceof Usuario) {
+                ((Usuario) personal).detalle();
+            } else if (personal instanceof Autor) {
+                ((Autor) personal).detalle();
+            } else if (personal instanceof Bibliotecario) {
+                ((Bibliotecario) personal).detalle();
+            }
+        }
+    }
+
 }

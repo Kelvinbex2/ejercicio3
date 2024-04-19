@@ -1,5 +1,6 @@
 package Modelo;
 
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -7,12 +8,11 @@ public class Usuario extends Personal {
     private String id;
     private ArrayList<Libro> librosPrest;
     
-
-    public Usuario() {
-        super("", "", "");
-        this.librosPrest = new ArrayList<>();
-    
-    }
+public Usuario(){
+    super("", "", "");
+    librosPrest = new ArrayList<>();
+}
+  
 
     public Usuario(String nombre, String fechNac, String tipo) {
         super(nombre, fechNac, tipo);
@@ -41,7 +41,7 @@ public class Usuario extends Personal {
         String id = nombresGen[nombresGen.length - 1];
         String idNombre = id.substring(0, Math.min(id.length(), 4)).toUpperCase();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String fechaFormateada = fechNac.formatted(formatter);
 
         return idNombre + "-" + fechaFormateada;
@@ -52,9 +52,13 @@ public class Usuario extends Personal {
   
 
     @Override
-    public String toString() {
-        return "Usuario [nombre=" + nombre + ", fechNac=" + fechNac + ", id=" + id + ", tipo=" + tipo + ", librosPrest="
-                + librosPrest + "]";
+    public void detalle(){
+        System.out.println("\tUsuario: ");
+        System.out.println("Nombre: " + getNombre());
+        System.out.println("FechaNac: " + getFechNac());
+        System.out.println("Tipo: " + getTipo());
+        System.out.println("Id : " + id);
+        
+        
     }
-
 }
