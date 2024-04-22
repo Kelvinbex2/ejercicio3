@@ -8,6 +8,7 @@ import Modelo.Biblioteca;
 import Modelo.Bibliotecario;
 import Modelo.Entrada;
 import Modelo.Libro;
+import Modelo.Personal;
 import Modelo.Usuario;
 
 public class Main {
@@ -20,8 +21,10 @@ public class Main {
 
     public static void main(String[] args) {
         bibliotecario = new Biblioteca("Kelvin", "Fuenla");
+        Personal usuario = new Usuario("kelvin", "20-20-20", "Usuario");
         materialBiblio = new Libro("h", "p", pedirFechaPublicacion());
         bibliotecario.aniadirLibro(materialBiblio);
+        bibliotecario.aniadirPersonal(usuario);
         crearMenu();
     }
 
@@ -29,7 +32,8 @@ public class Main {
         int opc;
 
         do {
-            System.out.println("\n\tMenu");
+            System.out.println("\n+================================+");
+            System.out.println("\tMenu");
             System.out.println("1: Agregar Libro");
             System.out.println("2: Mostrar Libros");
             System.out.println("3: Prestar Libro");
@@ -38,6 +42,7 @@ public class Main {
             System.out.println("6. Agregar Personal");
             System.out.println("7. Mostrar Personal");
             System.out.println("0: Salir");
+            System.out.println(" +================================+");
             System.out.print("Ingrese una opción: ");
             opc = Entrada.leerEntero();
 
@@ -78,7 +83,7 @@ public class Main {
     }
 
     private static void devolverLibro() {
-        System.out.println("Devolver Libro");
+        System.out.println("\t\nDevolver Libro");
         System.out.println("Ingrese el titulo del Libro: ");
         String idl = Entrada.leerString();
         bibliotecario.devolver(idl);
@@ -91,12 +96,11 @@ public class Main {
     }
 
     private static void crearLibro() {
-        
 
-        System.out.print("Título del Libro: ");
+        System.out.print("\nTítulo del Libro: ");
         String titulo = Entrada.leerString();
         while (titulo.contains(materialBiblio.getTitulo())) {
-            System.out.println("El título del libro ya existe");
+            System.out.println("\tEl título del libro ya existe");
             System.out.print("Título del Libro: ");
             titulo = Entrada.leerString();
         }
@@ -104,7 +108,7 @@ public class Main {
         String autor = Entrada.leerString();
         LocalDate fechaPublicacion = pedirFechaPublicacion();
 
-       Libro libro = new Libro(titulo, autor, fechaPublicacion);
+        Libro libro = new Libro(titulo, autor, fechaPublicacion);
         bibliotecario.aniadirLibro(libro);
         System.out.println("Libro añadido correctamente.");
     }
@@ -122,11 +126,11 @@ public class Main {
 
     public static void eliminar() {
 
-        System.out.print("Título del Libro: ");
+        System.out.print("\n  \tTítulo del Libro: ");
         String titulo = Entrada.leerString();
 
         bibliotecario.eliminar(titulo);
-        System.out.println("Libro eliminado correctamente.");
+        System.out.println("\tLibro eliminado correctamente.");
     }
 
     public static void prestar() {

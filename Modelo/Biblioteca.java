@@ -120,6 +120,9 @@ public class Biblioteca {
         listaMaterialBiblios.add(libro);
 
     }
+    public void aniadirPersonal(Personal personal){
+        personals.add(personal);
+    }
 
     public void eliminar(String titulo) {
         boolean libroEncontradp = false;
@@ -150,41 +153,54 @@ public class Biblioteca {
 
     public void prestar(String titulo) {
         boolean libroEncontrado = false;
+        mostrarPersonals();
+        System.out.print("Ingrese el nombre del personal: ");
+        String nomPer = Entrada.leerString();
+        for (Personal personal : personals) {
+            if (personal instanceof Usuario && personal.getNombre().equalsIgnoreCase(nomPer)) {
+                for (Libro libro : listaMaterialBiblios) {
+                    if (libro.getTitulo().equalsIgnoreCase(titulo) && libro.getContador() > 0) {
+                        libro.prestar();
+                        if (libro.isLibroPrestado()) { // Verificar si el libro fue prestado con éxito
+                            listaMaterial.add(libro);// Agregar el libro prestado a la lista de libros que tiene el
+                                                     // usuario
+                            System.out.printf("\n¡Libro prestado con éxito!\n");
+                        } else {
+                            System.out.println("No se pudo prestar el libro.");
+                        }
+                        libroEncontrado = true;
+                        break; // Salir del bucle
 
-        for (Libro libro : listaMaterialBiblios) {
-            if (libro.getTitulo().equalsIgnoreCase(titulo) && libro.getContador() > 0) {
-                libro.prestar();
-                if (libro.isLibroPrestado()) { // Verificar si el libro fue prestado con éxito
-                    listaMaterial.add(libro);// Agregar el libro prestado
-
-                    System.out.println("¡Libro prestado con éxito!");
-                } else {
-                    System.out.println("No se pudo prestar el libro.");
+                    }
                 }
-                libroEncontrado = true;
-                break; // Salir del bucle
 
+                if (!libroEncontrado) {
+                    System.out.println("El libro no está disponible para prestar o no existe en la biblioteca.");
+                }
             }
         }
 
-        if (!libroEncontrado) {
-            System.out.println("El libro no está disponible para prestar o no existe en la biblioteca.");
-        }
     }
 
     public void devolver(String titulo) {
         boolean libroEncontrado = false;
-
-        for (Libro libro : listaMaterial) {
-            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
-                libro.devolver();
-                System.out.println("¡Libro devuelto con éxito!");
-                listaMaterial.remove(libro);// Eliminarlo de la lista de libros prestados
-                libroEncontrado = true;
-                Collections.sort(listaMaterialBiblios);// ordenar por titulo
-                break;
+        System.out.println("Personas que han prestado el libro");
+        String usPrestado = Entrada.leerString();
+        for (Personal usuario : personals) {
+            if (usuario instanceof Usuario && usuario.getNombre().equalsIgnoreCase(usPrestado)) {
+                for (Libro libro : listaMaterial) {
+                    if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                        libro.devolver();
+                        System.out.println("¡Libro devuelto con éxito!");
+                        listaMaterial.remove(libro);// Eliminarlo de la lista de libros prestados
+                        libroEncontrado = true;
+                        Collections.sort(listaMaterialBiblios);// ordenar por titulo
+                        break;
+                    }
+                }
             }
         }
+
         if (!libroEncontrado) {
             System.out.println("El libro no está disponible para devolver o no existe en la biblioteca.");
         }
